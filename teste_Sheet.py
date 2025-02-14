@@ -54,9 +54,12 @@ for caminho, subpasta, arquivos in os.walk(origem):
             data = [] # VARIÁVEL UTILIZADA PARA GUARDAR OS DADOS DAS PLANILHAS
             aux = [] # AUXILIAR PRA SALVAR LINHAS NA VARIÁVEL "data"
             planilhaCompleta.add_worksheet(nome,200,100,index=None) # ADICIONA UMA PÁGINA AO SHEET
-            for i in range(1,aba_atual.max_row-1): # 2 FOR PRA SALVAR OS DADOS DA PLANILHA LINHA A LINHA
-                for y in range(1,aba_atual.max_column-1):
-                    aux.append(str(aba_atual.cell(row=i, column=y).value))
+            for i in range(1,aba_atual.max_row+1): # 2 FOR PRA SALVAR OS DADOS DA PLANILHA LINHA A LINHA
+                for y in range(1,aba_atual.max_column+1):
+                    if str(aba_atual.cell(row=i, column=y).value) == "None":
+                        aux.append("")
+                    else:
+                        aux.append(str(aba_atual.cell(row=i, column=y).value))
 
                 data.append(aux)
                 aux = []
