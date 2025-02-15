@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 
 # CONEXÃO COM GOOGLE SHEETS
-filename = "verdant-sensor-450823-f8-97dfd3319372.json" # ARQUIVO GERADO NO GOOGLE CLOUD PELAS CONTAS DE SERVIÇO
+filename = "ARQUIVO_G_SHEET" # ARQUIVO GERADO NO GOOGLE CLOUD PELAS CONTAS DE SERVIÇO
 
     # PADRÃO
 scopes = [
@@ -24,8 +24,8 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(filename=filename,scope
 client = gspread.authorize(creds)
 
 
-titulo = "Teste Royal" # NOME DO SHEET
-folder_id = "17goiJAKkxQKYrcTxtYXkaOcjDw9jWqhZ" # ID DA PASTA NO GOOGLE DRIVE
+titulo = "NOME_PLANILHA" # NOME DO SHEET
+folder_id = "ID_PASTA_DRIVE" # ID DA PASTA NO GOOGLE DRIVE
 
     # PADRÃO
 planilhaCompleta = client.open(title = titulo, folder_id = folder_id)
