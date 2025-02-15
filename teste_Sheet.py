@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 
 # CONEXÃO COM GOOGLE SHEETS
-filename = "ARQUIVO_CONTA_SERVIÇO.json" # ARQUIVO GERADO NO GOOGLE CLOUD PELAS CONTAS DE SERVIÇO
+filename = "verdant-sensor-450823-f8-97dfd3319372.json" # ARQUIVO GERADO NO GOOGLE CLOUD PELAS CONTAS DE SERVIÇO
 
     # PADRÃO
 scopes = [
@@ -24,22 +24,20 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(filename=filename,scope
 client = gspread.authorize(creds)
 
 
-titulo = "NOME_PLANILHA" # NOME DO SHEET
-folder_id = "ID_PASTA_DRIVE" # ID DA PASTA NO GOOGLE DRIVE
+titulo = "Teste Royal" # NOME DO SHEET
+folder_id = "17goiJAKkxQKYrcTxtYXkaOcjDw9jWqhZ" # ID DA PASTA NO GOOGLE DRIVE
 
-# PADRÃO
+    # PADRÃO
 planilhaCompleta = client.open(title = titulo, folder_id = folder_id)
 
 # NOME DAS PLANILHAS
-origem = r"CAMINHO_PLANILHAS"
-
-posicao = 0 # AUXILIAR PRA DIFERENCIAR A PRIMEIRA EXECUÇÃO (DEPOIS CORRIGIR PRA DEIXAR MELHOR)
+origem = r"C:\Users\Padrão\Desktop\BeL Tech\VJ\Royal\Planilhas"
 
 for caminho, subpasta, arquivos in os.walk(origem):
-    for nome in arquivos: # UMA EXECUÇÃO POR ARQUIVO
+    for contador,(nome) in enumerate(arquivos): # UMA EXECUÇÃO POR ARQUIVO
+        print(contador)
         arq = caminho+"\\"+nome
-        posicao = posicao + 1
-        if posicao == 1: # SE FOR A PRIMEIRA EXECUÇÃO IMPORTA PRA RESERTAR A PLANILHA
+        if contador == 0: # SE FOR A PRIMEIRA EXECUÇÃO IMPORTA PRA RESERTAR A PLANILHA
             df_planilha = pd.read_excel(arq) # ABRE PRA CONVERTER EM CSV
             nomeArq = nome+".csv"
             arq = caminho+"\\"+nomeArq
@@ -48,7 +46,7 @@ for caminho, subpasta, arquivos in os.walk(origem):
             client.import_csv(planilhaCompleta.id,content) # IMPORTA
             deletar = Path(arq) # SELECIONA A PLANILHA À APAGAR
             deletar.unlink() # APAGA A PLANILHA
-        else: # CASO NÃO FOR A PRIMEIRA EXECUÇÃoptimize
+        else: # CASO NÃO FOR A PRIMEIRA EXECUÇÃO
             arquivo = load_workbook(arq) # SELECIONA OS DADOS
             aba_atual = arquivo.active # PEGA O NOME DA ABA
             data = [] # VARIÁVEL UTILIZADA PARA GUARDAR OS DADOS DAS PLANILHAS
